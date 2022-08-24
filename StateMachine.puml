@@ -11,7 +11,6 @@
     long0 --> Rest : Training Done!
     Rest : Sauna
     Rest : Shower
-    Rest : Shower
   }
 
   State1 --> State2 : Succeeded
