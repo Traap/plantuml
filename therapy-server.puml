@@ -1,0 +1,26 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/java.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/webplatform.puml
+!include DEVICONS/sqllite.puml
+
+!include DEVICONS2/dotnetcore.puml
+!include DEVICONS2/embeddedc.puml
+!include DEVICONS2/matlab.puml
+!include DEVICONS2/rails.puml
+
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+System_Boundary(c1, "A: Therapy Web App ", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+  Container(server, "A': Therapy Server", "RAILs 6.1.6", "clinic-server-staging \n qa3.yellowmdicaltest.com \n App Service \n Dockerized \n Ubuntu 20.04 LTS", $sprite="rails")
+  Container(worker, "A'': Therapy Worker", "RAILs 6.1.6", "cm-clc-qa3-uws-clinic-worker-staging-01-func \n Function App \n Dockerized \n Ubuntu 20.04 LTS", $sprite="rails")
+}
+
+@enduml

@@ -1,0 +1,77 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/java.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/webplatform.puml
+!include DEVICONS/sqllite.puml
+
+!include DEVICONS2/dotnetcore.puml
+!include DEVICONS2/embeddedc.puml
+!include DEVICONS2/matlab.puml
+!include DEVICONS2/rails.puml
+
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+
+Person(hpc, "X: Healthcare Provider", "People that treat Patients", $sprite="users")
+Person(patient, "Z: Person receiving Therapy", "People that have an implant or wearable", $sprite="users")
+
+
+System_Boundary(c1, "A: Therapy Web App", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+  Container(server, "A': Therapy Server", "RAILs 6.1.6", "clinic-server-staging \n qa3.yellowmdicaltest.com \n App Service \n Dockerized \n Ubuntu 20.04 LTS", $sprite="rails")
+  Container(worker, "A'': Therapy Worker", "RAILs 6.1.6", "cm-clc-qa3-uws-clinic-worker-staging-01-func \n Function App \n Dockerized \n Ubuntu 20.04 LTS", $sprite="rails")
+  Container(redis, "L: Redis Service", "In-memory Storage", "https://clinic-app-dist-staging.azurewebsites.net",$sprite="redis")
+}
+
+System_Boundary(c2, "Healthcare Provider", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+  Container(pcapp, "P: Therapy App", "C#, UAP, 10.0.17763.0", "Edition Windows 10 Pro \n Version 21H1 \n OS Build 19043.1889 \n Pack 120.2212.4180.0", $sprite="dotnetcore")
+  ContainerDb(localdb, "J: Local Storage", "sqllite", "Therapy Telemetry", $sprite="sqllite")
+}
+
+System_Boundary(c3, "Patient", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+  Container(bs, "B: Base station", "C/C++", "Operating Room, Physicians Office, or Home", $sprite="embeddedc")
+  Container(implant, "E: Implant \n or Wearable", "C/C++", "Medical device providing Telemetry readings", $sprite="embeddedc")
+}
+
+System_Boundary(c4, "Cloud Data Management Platform", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+  Container(cc, "F': Therapy Calc", "matlab", "clinic-calc-staging \n 172.18.0.5 \n Win10 Pro N", $sprite="matlab.md")
+  ContainerDb(cdb, "F: Therapy Database", "PostgreSQL", "Physicians & Patients \n Therapy Plans and Results", $sprite="postgresql")
+  Container(cdmp, "G': CDMP", "Web App", "https://qa3.yellowmdicaltest.com", $sprite="webplatform")
+  ContainerDb(cdmpdb, "G: CDMP", "PostgreSQL", "Holds ...", $sprite="postgresql")
+  Container(dist, "K: PC App Distribution Service", "Authorized users", "https://clinic-app-dist-staging.azurewebsites.net",$sprite="webplatform")
+  ContainerDb(devdb, "I: Therapy Server", "PostgreSQL", "clinic-db-server.postgres.database.azure.com \n port: 5432 \n dbname: staging \n\n Users\nPatients\nTest Cases", $sprite="postgresql")
+  ContainerDb(storagedb, "C: Cloud Storage", "Azure Blob", "Raw CTE Data \n device2cloudfiles \n staging \n staging-log \n staging-failed \n staging-processed")
+}
+
+BiRel(hpc, pcapp, "Uses", "https")
+BiRel(hpc, bs, "Uses", "USB")
+
+BiRel(bs, implant, "Connects", "WiFi")
+
+Rel_U(patient, implant, "has")
+BiRel(patient, bs, "Uses")
+
+BiRel_L(pcapp, bs, "Connects", "USB")
+BiRel(pcapp, localdb, "Records Temporary Threapy Readings")
+BiRel_R(pcapp, server, "Access Therapy Data", "HTTP & GraphQL")
+BiRel_R(pcapp, dist, "Downloads new Therapy PC App", "HTTP")
+BiRel_R(pcapp, storagedb, "Pushes Threapy Readings to Cloud Storage")
+
+BiRel(server, devdb, "Read/Write", "HTTP")
+BiRel_U(server, redis, "Uses", "HTTP")
+
+BiRel(worker, storagedb, "CTE Data file Processor", "device2cloudfiles/stgtelemetrydatadev")
+BiRel(worker, devdb, "Read/Write", "HTTP")
+BiRel_R(worker, cdb, "Periodic Therapy Database Importer")
+BiRel(worker, cdmpdb, "Periodic CDMP Data Importer")
+BiRel_U(worker, redis, "Uses", "HTTP")
+
+BiRel(cdb, cc, "Provides")
+Rel(cdmpdb, cdmp, "Provides")
+@enduml

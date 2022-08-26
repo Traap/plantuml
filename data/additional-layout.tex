@@ -1,0 +1,38 @@
+% {{{ Component column names.
+
+\csvnames{componentNames}{%
+   1=\nickname%
+  ,2=\name%
+  ,3=\description%
+}%
+
+% -------------------------------------------------------------------------- }}}
+% {{{ Component table definition.
+
+\csvstyle{componentStyle}{%
+  longtable=|C{1.0cm}|L{3.0cm}|L{7.0cm}|%
+  ,table head=\hline Label & Name & Description\\\hline\hline\endhead%
+  ,late after line=\\\hline%
+  ,componentNames%
+}%
+
+% -------------------------------------------------------------------------- }}}
+% {{{ Endpoint file column names.
+
+\csvnames{endpointNames}{%
+   1=\nickname%
+  ,2=\route%
+  ,3=\endpoint%
+}%
+
+% -------------------------------------------------------------------------- }}}
+% {{{ Endpoint table definition.
+
+\csvstyle{endpointStyle}{%
+  longtable=|C{1.0cm}|C{1.8cm}|C{1.8cm}|%
+  ,table head=\hline Label & Route & Endpoint\\\hline\hline\endhead%
+  ,late after line=\\\hline%
+  ,endpointNames%
+}%
+
+% -------------------------------------------------------------------------- }}}

@@ -1,0 +1,19 @@
+nn | name             | description
+A  | Therapy Web App  | A' + A"
+A' | Therapy Server   | Therapy Rails Server.
+A" | Therapy Worker   | Therapy Woker Server.
+B  | Base station     | Operating room, Therapy room, and Patient Home base stations.
+C  | BLOB Storage     | Therapy reading uploaded, processed, and failed.
+D  | TDFP             | Therapy Data File processor(s).
+E  | Implant          | Patient implant or wearable.
+F  | Therapy Calc     | Therapy calculations done with MatLab.
+F' | Therapy Calc DB  | Therapy calculations database.
+G  | TDMP             | Therapy cloud Data Management Platform.
+H  | GraphQL          | GraphQL and HTTP server.
+I  | Therapy Database | PostgreSQL database used by A.
+J  | Local Storage    | Local storage use by P.
+K  | Distribution     | Download new P.
+L  | Redis            | In-memory data store \& queue used by A.
+P  | Therapy PC App   | Therapy PC.
+Y  | HCP              | People treating patients.
+Z  | Patient          | People receiving treatments and using implants or wearables.

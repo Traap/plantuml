@@ -1,0 +1,9 @@
+A2      | A2  \rightarrow D \rightarrow C   | C
+A3      | A3  \rightarrow I \rightarrow F   | F
+A4      | A4  \rightarrow G                 | G
+A10     | A10 \rightarrow L                 | L
+P5      | P5  \rightarrow B                 | B
+P6      | P6  \rightarrow K                 | K
+P7      | P7  \rightarrow J                 | J
+P8      | P8  \rightarrow C                 | C
+P9      | P9  \rightarrow H \rightarrow A1 | A1

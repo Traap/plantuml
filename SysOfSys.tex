@@ -1,0 +1,31 @@
+\documentclass{tlc-article}%
+
+\begin{document}%
+
+\tlcTitlePageAndTableOfContents
+  {System of System}
+  {Gary A. Howard}
+  {System of System boundaries and System of System end-points}
+
+\section{System of System Example}%
+
+  \begin{figure}[h!]%
+    \centering%
+    \includegraphics[scale=.20, angle=0]{SysOfSys.png}%
+    \caption{The System of System shows system boundaries and endpoints to system within each system boundary.}
+    \label{fig:sysofssys}%
+  \end{figure}%
+
+  \subsection{Component Names}%
+  \csvreader[componentStyle, separator=pipe] % Controls
+    {data/component-names.csv} % Relative path to file
+    {} % Filtering
+    {\nickname & \name & \description} % The data
+
+  \subsection{End Points}%
+  \csvreader[endpointStyle, separator=pipe] % Controls
+    {data/endpoints.csv} % Relative path to file
+    {} % Filtering
+    {\nickname & \route & \endpoint} % The data.
+
+\end{document}%
