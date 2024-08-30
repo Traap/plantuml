@@ -1,0 +1,37 @@
+@startgantt
+-- All example --
+[Clerical Supervisor II/III]     as [C0] requires 12 weeks
+[Refresn Essential Requirements] as [C1] requires 1 week
+[Route for CEO/HR Approval]      as [C2] requires 1 week
+[Post CS II/III Job Opening]     as [C3] requires 1 week
+[Screen CS II/III Candiates]     as [C4] requires 4 weeks
+[Interview CS II/III Candiates]  as [C5] requires 4 weeks
+[CS II/II Background Checks]     as [C6] requires 3 weeks
+[CS II/II Starts]                as [C7] requires 1 week
+
+[C2] starts at [C1]'s end
+[C3] starts at [C2]'s end
+[C4] starts at [C3]'s end
+[C5] starts at [C3]'s end
+[C6] starts at [C5]'s end
+[C7] starts at [C6]'s end
+
+
+[Graphihc Technician II]         as [G0] requires 12 weeks
+[Refresn Essential Requirements] as [G1] requires 1 week
+[Route for CEO/HR Approval]      as [G2] requires 1 week
+[Post GT II Job Opening]         as [G3] requires 1 week
+[Screen GT II Candiates]         as [G4] requires 4 weeks
+[Interview GT II Candiates]      as [G5] requires 4 weeks
+[GT II Background Checks]        as [G6] requires 3 weeks
+[GT II Starts]                   as [G7] requires 1 week
+
+[G2] starts at [G1]'s end
+[G3] starts at [G2]'s end
+[G4] starts at [G3]'s end
+[G5] starts at [G3]'s end
+[G6] starts at [G5]'s end
+[G7] starts at [G6]'s end
+
+[Equipment and Desk Moves]       as [D0] requires 12 weeks
+@endgantt
