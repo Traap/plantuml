@@ -1,0 +1,42 @@
+@startuml
+
+' Entities and Processes
+actor "User" as U
+
+' P2M Postage
+database "P2M Billing 4 Line Data" as P2M_DS
+process "P2M Billing" as P2M_P
+database "P2M PTP" as P2M_PTP_DS
+
+U -> P2M_P : Starts
+P2M_DS -> P2M_P : Transformation Started
+P2M_P -> P2M_PTP_DS : Transformation Completed
+
+' VcPrint Postage
+database "VcPrint" as VCP_DS
+process "USPS Reconcile" as VCP_P
+database "VcPrint PTP" as VCP_PTP_DS
+
+U -> VCP_P : Starts
+VCP_DS -> VCP_P : Transformation Started
+VCP_P -> VCP_PTP_DS : Transformation Completed
+
+' USPS Postage
+database "USPS" as USPS_DS
+process "!P2M & !VcPrint" as USPS_P
+database "VcPrint PTP" as USPS_PTP_DS
+
+U -> USPS_P : Starts
+USPS_DS -> USPS_P : Transformation Started
+USPS_P -> USPS_PTP_DS : Transformation Completed
+
+' Final PTP TC60
+database "Final PTP" as PTP_DS
+process "PTP Merger" as PTP_P
+
+P2M_PTP_DS -> PTP_P
+VCP_PTP_DS -> PTP_P
+USPS_PTP_DS -> PTP_P
+PTP_P -> PTP_DS
+
+@enduml
